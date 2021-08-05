@@ -2,6 +2,11 @@ const obterHoteis = require('../data/hotels.js');
 
 const hotelMaisBarato = (tipoCliente, datasEstadia) => {
     const hoteis = obterHoteis();
+    const simulacoes = _construirSimulacoes(hoteis, datasEstadia, tipoCliente);
+    return _melhorHotel(simulacoes).nome;
+};
+
+const _construirSimulacoes = (hoteis, datasEstadia, tipoCliente) => {
     const simulacoes = [];
 
     hoteis.forEach((hotel) => {
@@ -14,8 +19,7 @@ const hotelMaisBarato = (tipoCliente, datasEstadia) => {
         });
     });
 
-    return _melhorHotel(simulacoes).nome;
-
+    return simulacoes;
 };
 
 const _calculaDiaria = (datasEstadia, hotel, tipoCliente) => {
@@ -30,7 +34,7 @@ const _calculaDiaria = (datasEstadia, hotel, tipoCliente) => {
     });
 }
 
-function _melhorHotel(simulacoes) {
+const _melhorHotel = (simulacoes) => {
     let menorCusto = simulacoes[0];
 
     simulacoes.forEach((atual) => {
